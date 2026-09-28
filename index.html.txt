@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veux-tu être ma Valentine ? 💖</title>
+    <style>
+        body {
+            background-color: #ffe6eb;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #btn-oui {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #btn-non {
+            background-color: #dc3545;
+            color: white;
+            position: absolute;
+        }
+
+        #message-final {
+            display: none;
+            color: #d63384;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-card">
+        <!-- Image / Mème affiché -->
+        <img id="mame-img" src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Cute cat">
+        
+        <!-- Texte de la question -->
+        <h2 id="question-text">Tu veux être ma valentine ? 🌸</h2>
+        
+        <!-- Boutons -->
+        <div class="buttons" id="button-container">
+            <button id="btn-oui" onclick="clicOui()">OUI 💕</button>
+            <button id="btn-non" onmouseover="deplacerNon()" onclick="deplacerNon()">Non</button>
+        </div>
+    </div>
+
+    <div id="message-final">
+        YOUHOU 🎉 J'arrive pas à croire que t'es dit oui ! 🥰💖
+    </div>
+
+    <script>
+        // Liste des messages et des images humoristiques qui changent à chaque tentative de fuite
+        const etapes = [
+            { text: "T'as cliqué non par accident 🥲", img: "https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" },
+            { text: "T'es genre vraiment vraiment sûr·e ?? 🤨", img: "https://media.giphy.com/media/12bjQ7uajesAtC/giphy.gif" },
+            { text: "S'il te plaît pookie ? 🥺👉👈", img: "https://media.giphy.com/media/1HRvF5PBdIJ77bIPUs/giphy.gif" },
+            { text: "Si tu dis non je vais être trop triste 😭", img: "https://media.giphy.com/media/7SF5scGB2AFrgsXP63/giphy.gif" },
+            { text: "Relis la question une dernière fois ? Dernière chance... 🤡", img: "https://media.giphy.com/media/efSePxL3C27zLG0mHY/giphy.gif" }
+        ];
+
+        let indexEtape = 0;
+
+        function deplacerNon() {
+            const btnNon = document.getElementById('btn-non');
+            const btnOui = document.getElementById('btn-oui');
+            const questionText = document.getElementById('question-text');
+            const memeImg = document.getElementById('mame-img');
+
+            // Faire bouger le bouton "Non" aléatoirement dans la page
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            btnNon.style.left = `${x}px`;
+            btnNon.style.top = `${y}px`;
+
+            // Faire grandir un tout petit peu le bouton "OUI" pour inciter à cliquer dessus
+            let currentScale = 1 + (indexEtape * 0.1);
+            btnOui.style.transform = `scale(${currentScale})`;
+
+            // Changer le texte et l'image en boucle
+            if (indexEtape < etapes.length) {
+                questionText.innerText = etapes[indexEtape].text;
+                memeImg.src = etapes[indexEtape].img;
+                indexEtape++;
+            } else {
+                indexEtape = 0; // Recommence la série si on insiste trop
+            }
+        }
+
+        function clicOui() {
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('message-final').style.display = 'block';
+            document.body.style.backgroundColor = '#ffb3c6';
+        }
+    </script>
+</body>
+</html>
